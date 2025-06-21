@@ -1,0 +1,13 @@
+[package]
+name = "Outline"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio-tungstenite = { version = "0.26.2", features = ["native-tls", "stream"] }
+tokio = { version = "1.44.2", features = ["full"] }
+tungstenite = "0.26.2"
+reqwest = "0.12.15"
+crossterm = "0.29.0"
+futures = "0.3.31"
+url = "2.5.4"
