@@ -2,8 +2,8 @@ use crate::outline::interface::{input, logo, set_title, write, write_ln};
 use crate::outline::modules::connect_handshake;
 
 mod outline {
-    pub mod interface;
     pub mod connector;
+    pub mod interface;
     pub mod modules;
 }
 
@@ -11,7 +11,7 @@ mod outline {
 async fn main() {
     set_title("Outline |  Powered by ZeroTrace (zerotrace.pw)");
     logo();
-    
+
     write_ln("1", "Connect and Handshake");
     write_ln("2", "Basic Fuzzing");
     write_ln("3", "Message-based Vulnerability Detection");
