@@ -1,5 +1,4 @@
-use std::io::{Write};
-use crate::outline::interface::interface::{input, logo, set_title, write, write_ln};
+use crate::outline::interface::{input, logo, set_title, write, write_ln};
 use crate::outline::modules::modules::connect_handshake;
 
 mod outline {

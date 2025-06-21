@@ -1,5 +1,4 @@
 pub mod connector {
-    use crate::outline::interface::interface::write_ln;
     use futures::{SinkExt, StreamExt};
     use std::error::Error;
     use tokio::net::TcpStream;
@@ -7,6 +6,7 @@ pub mod connector {
     use tungstenite::http::status;
     use tungstenite::{Message, Utf8Bytes};
     use url::Url;
+    use crate::outline::interface::write_ln;
 
     pub async fn connect_ws(scheme: &str, host: &str, path: &str) -> Result<WebSocketStream<MaybeTlsStream<TcpStream>>, Box<dyn Error>> {
         let url = format!("{}://{}{}", scheme, host, path);
@@ -42,15 +42,12 @@ pub mod connector {
     pub async fn ws_send_message(socket: &mut WebSocketStream<MaybeTlsStream<TcpStream>>, message: &str) {
         let (mut write, mut read) = socket.split();
 
-        let message = format!("{}", message);
+        let message = message.to_string();
         let message = Message::Text(Utf8Bytes::from(message));
 
-        match write.send(message.clone()).await {
-            Err(error) => {
-                write_ln("-", error.to_string().as_str());
-                return;
-            },
-            _ => (),
+        if let Err(error) = write.send(message.clone()).await {
+            write_ln("-", error.to_string().as_str());
+            return;
         }
 
         match read.next().await {
@@ -63,6 +60,7 @@ pub mod connector {
         }
     }
 
+    #[warn(dead_code)]
     pub async fn get_website_body(url: &str) -> Result<String, Box<dyn Error>> {
         let body = reqwest::get(url)
             .await?

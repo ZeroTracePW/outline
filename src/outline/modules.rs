@@ -2,7 +2,7 @@ pub mod modules {
     use tokio::net::TcpStream;
     use tokio_tungstenite::{MaybeTlsStream, WebSocketStream};
     use crate::outline::connector::connector::{connect_ws, ws_send_message};
-    use crate::outline::interface::interface::{clear, input, input_with_prompt, logo, write, write_ln};
+    use crate::outline::interface::{clear, input, input_with_prompt, logo, write, write_ln};
 
     pub async fn connect_server() -> WebSocketStream<MaybeTlsStream<TcpStream>> {
         clear();
@@ -80,7 +80,7 @@ pub mod modules {
                 _ => {
                     write_ln("+", format!("Message Sent: {}", message).as_str());
                     ws_send_message(&mut ws, message.as_str()).await;
-                    println!("");
+                    println!();
                 },
             }
         }
